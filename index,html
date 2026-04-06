@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Lantern Corps Hub</title>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4SM9XZTMTR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-4SM9XZTMTR');
+    </script>
+
+    <style>
+        body {
+            background-color: #001a00;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            border: 2px solid #00ff00;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #00ff00;
+            background: rgba(0, 0, 0, 0.8);
+        }
+        h1 { text-align: center; text-transform: uppercase; letter-spacing: 3px; }
+        .oath { font-style: italic; text-align: center; margin: 20px 0; color: #adff2f; }
+        .sector-stats { background: #002200; padding: 15px; border-radius: 8px; margin-top: 20px; }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #00ff00;
+            color: black;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Corps Registry: Sector 2814</h1>
+    
+    <div class="oath">
+        "In brightest day, in blackest night,<br>
+        No evil shall escape my sight.<br>
+        Let those who worship evil's might,<br>
+        Beware my power... Green Lantern's light!"
+    </div>
+
+    <div class="sector-stats">
+        <strong>Active Lanterns:</strong> Hal Jordan, John Stewart, Guy Gardner, Kyle Rayner<br>
+        <strong>Status:</strong> Sector Secure<br>
+        <strong>Power Battery Charge:</strong> <span id="charge">100%</span>
+    </div>
+
+    <button onclick="recharge()">Recite Oath to Recharge</button>
+</div>
+
+<script>
+    function recharge() {
+        document.getElementById('charge').innerText = "100% - Fully Powered";
+        alert("Power battery recharged! Beware your power!");
+    }
+</script>
+
+</body>
+</html>
