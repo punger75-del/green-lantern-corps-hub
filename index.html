@@ -14,9 +14,15 @@
     </script>
 
     <style>
+        :root {
+            --gl-green: #00ff00;
+            --gl-dark: #001a00;
+            --gl-border: #004400;
+            --gl-highlight: #adff2f;
+        }
         body {
-            background-color: #001a00;
-            color: #00ff00;
+            background-color: var(--gl-dark);
+            color: var(--gl-green);
             font-family: 'Courier New', Courier, monospace;
             margin: 0;
             display: flex;
@@ -25,53 +31,52 @@
             min-height: 100vh;
         }
         .container {
-            max-width: 700px;
+            max-width: 850px;
             width: 95%;
-            margin-top: 20px;
-            border: 2px solid #00ff00;
+            margin: 20px 0;
+            border: 2px solid var(--gl-green);
             border-radius: 15px;
             background: rgba(0, 0, 0, 0.9);
-            box-shadow: 0 0 25px #00ff00;
+            box-shadow: 0 0 30px var(--gl-green);
             overflow: hidden;
         }
-        /* Navigation Tabs */
         .nav-tabs {
             display: flex;
             background: #002200;
-            border-bottom: 2px solid #00ff00;
+            border-bottom: 2px solid var(--gl-green);
+            flex-wrap: wrap;
         }
         .tab-btn {
             flex: 1;
-            padding: 15px;
+            padding: 12px;
             background: none;
             border: none;
-            color: #00ff00;
+            color: var(--gl-green);
             font-family: 'Courier New', bold;
             cursor: pointer;
             text-transform: uppercase;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             transition: 0.3s;
+            min-width: 120px;
         }
         .tab-btn:hover { background: rgba(0, 255, 0, 0.1); }
-        .tab-btn.active { background: #00ff00; color: black; }
+        .tab-btn.active { background: var(--gl-green); color: black; }
 
         .content-section { display: none; padding: 25px; }
         .content-section.active { display: block; }
 
-        h1 { text-align: center; font-size: 1.4rem; color: #adff2f; margin-bottom: 20px; }
-        .info-card { background: #001100; border: 1px solid #004400; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
-        .label { color: #adff2f; font-weight: bold; font-size: 0.7rem; display: block; margin-bottom: 5px; }
+        h1, h2 { text-align: center; color: var(--gl-highlight); text-transform: uppercase; }
+        h1 { font-size: 1.6rem; border-bottom: 1px solid var(--gl-border); padding-bottom: 10px; }
         
-        button.action-btn {
-            width: 100%;
-            padding: 12px;
-            background: #00ff00;
-            color: black;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
+        .info-card { background: #001100; border: 1px solid var(--gl-border); padding: 15px; border-radius: 8px; margin-bottom: 15px; line-height: 1.5; }
+        .label { color: var(--gl-highlight); font-weight: bold; text-transform: uppercase; font-size: 0.8rem; display: block; margin-bottom: 5px; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.85rem; }
+        th, td { border: 1px solid var(--gl-border); padding: 8px; text-align: left; }
+        th { background: #002200; color: var(--gl-highlight); }
+
+        .oath { text-align: center; font-style: italic; color: #fff; margin: 20px 0; }
+        button.action-btn { width: 100%; padding: 12px; background: var(--gl-green); color: black; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -79,67 +84,110 @@
 <div class="container">
     <div class="nav-tabs">
         <button class="tab-btn active" onclick="openTab('registry')">Registry</button>
-        <button class="tab-btn" onclick="openTab('archives')">Archives</button>
-        <button class="tab-btn" onclick="openTab('missions')">Missions</button>
+        <button class="tab-btn" onclick="openTab('history')">History</button>
+        <button class="tab-btn" onclick="openTab('spectrum')">Spectrum</button>
+        <button class="tab-btn" onclick="openTab('lanterns')">Lanterns</button>
+        <button class="tab-btn" onclick="openTab('allies')">Allies</button>
     </div>
 
     <div id="registry" class="content-section active">
-        <h1>Sector 2814 Database</h1>
-        <div class="info-card">
-            <span class="label">Oath of the Corps:</span>
-            <p style="text-align: center; font-style: italic;">"In brightest day, in blackest night..."</p>
+        <h1>Sector 2814 Registry</h1>
+        <div class="oath">
+            "In brightest day, in blackest night, No evil shall escape my sight. Let those who worship evil's might, Beware my power... Green Lantern's light!"
         </div>
         <div class="info-card">
-            <span class="label">Active Personnel:</span>
-            Hal Jordan, John Stewart, Guy Gardner, Kyle Rayner, Jessica Cruz, Simon Baz
+            <span class="label">Mission Status:</span>
+            <div id="missionText">Awaiting command from Oa...</div>
         </div>
-        <button class="action-btn" onclick="alert('Power Battery Synchronized!')">Check Battery Status</button>
+        <button class="action-btn" onclick="generateMission()">Generate Sector Mission</button>
     </div>
 
-    <div id="archives" class="content-section">
-        <h1>The Oan Archives</h1>
+    <div id="history" class="content-section">
+        <h1>Era Chronicles</h1>
         <div class="info-card">
-            <span class="label">The Emotional Spectrum:</span>
-            Will (Green), Fear (Yellow), Rage (Red), Love (Violet), Hope (Blue), Compassion (Indigo), Avarice (Orange).
+            <span class="label">Golden Age (1940-1951)</span>
+            Alan Scott was a rail engineer who forged a ring from the "Starheart" meteor[cite: 11, 12]. His power was magical and limited by a weakness to wood[cite: 13, 18].
         </div>
         <div class="info-card">
-            <span class="label">Sector Lore:</span>
-            <p>I've left this space open for the deep-cut info from your notebook! We can add sections here for specific character backstories or ring mechanics.</p>
+            <span class="label">Silver Age (1959-1970)</span>
+            The mythos shifted to science fiction with test pilot Hal Jordan, who was selected by the dying alien Abin Sur to join the intergalactic Green Lantern Corps[cite: 23, 24].
+        </div>
+        <div class="info-card">
+            <span class="label">Modern & Rebirth Eras</span>
+            After the destruction of Coast City, Hal Jordan became the villain Parallax[cite: 43]. The lore was later retconned to reveal Parallax as a fear entity that possessed Jordan[cite: 49, 92].
         </div>
     </div>
 
-    <div id="missions" class="content-section">
-        <h1>Patrol Duty</h1>
-        <div class="info-card" id="mission-display">
-            Awaiting transmission from the Guardians...
+    <div id="spectrum" class="content-section">
+        <h1>The Emotional Spectrum</h1>
+        <p>The spectrum consists of seven fundamental colors fueled by the emotions of sentient beings[cite: 53, 54].</p>
+        <table>
+            <tr><th>Color</th><th>Emotion</th><th>Entity</th></tr>
+            <tr><td>Red</td><td>Rage</td><td>The Butcher [cite: 58]</td></tr>
+            <tr><td>Orange</td><td>Avarice</td><td>Ophidian [cite: 59]</td></tr>
+            <tr><td>Yellow</td><td>Fear</td><td>Parallax [cite: 61]</td></tr>
+            <tr><td>Green</td><td>Will</td><td>Ion [cite: 62]</td></tr>
+            <tr><td>Blue</td><td>Hope</td><td>Adara [cite: 63]</td></tr>
+            <tr><td>Indigo</td><td>Compassion</td><td>Proselyte [cite: 64]</td></tr>
+            <tr><td>Violet</td><td>Love</td><td>The Predator [cite: 65]</td></tr>
+        </table>
+        <div class="info-card">
+            <span class="label">Primary Forces:</span>
+            Beyond the spectrum lie the Black Lanterns (Death) and the White Lanterns (Life)[cite: 67].
         </div>
-        <button class="action-btn" onclick="generateMission()">Generate Random Patrol</button>
+    </div>
+
+    <div id="lanterns" class="content-section">
+        <h1>Earth's Protectors</h1>
+        <div class="info-card">
+            <span class="label">Hal Jordan & John Stewart</span>
+            Hal is a fearless test pilot[cite: 82]. John Stewart is an architect and Marine veteran who has led both the Corps and the Justice League[cite: 35, 82].
+        </div>
+        <div class="info-card">
+            <span class="label">Kyle Rayner & Jessica Cruz</span>
+            Kyle is an artist known as "The Torchbearer"[cite: 44, 83]. Jessica Cruz is the first human female Green Lantern, famous for overcoming intense anxiety[cite: 84].
+        </div>
+        <div class="info-card">
+            <span class="label">Teen Lantern (Keli Quintela)</span>
+            An 11-year-old Bolivian girl who "hacked" into the Green Lantern power source using an advanced alien gauntlet[cite: 79, 1005, 1051].
+        </div>
+    </div>
+
+    <div id="allies" class="content-section">
+        <h1>Iconic Alien Legends</h1>
+        <div class="info-card">
+            <span class="label">Kilowog</span>
+            The Bolovaxian primary drill instructor for the Corps and the last of his species[cite: 85, 86].
+        </div>
+        <div class="info-card">
+            <span class="label">Tomar-Re</span>
+            A Xudarian scientist and close friend of Hal Jordan[cite: 790, 797]. He famously failed to save the planet Krypton from destruction[cite: 778, 796].
+        </div>
+        <div class="info-card">
+            <span class="label">Mogo</span>
+            A sentient, living planet that guides power rings to new recruits across the universe[cite: 88, 816].
+        </div>
     </div>
 </div>
 
 <script>
     function openTab(tabId) {
-        // Hide all sections
         const sections = document.getElementsByClassName('content-section');
         for (let s of sections) s.classList.remove('active');
-        
-        // Deactivate all buttons
         const buttons = document.getElementsByClassName('tab-btn');
         for (let b of buttons) b.classList.remove('active');
-        
-        // Show selected
         document.getElementById(tabId).classList.add('active');
         event.currentTarget.classList.add('active');
     }
 
     function generateMission() {
         const missions = [
-            "Sector 666: Infiltrate the Forbidden Zone.",
-            "Sector 2814: Stop Starro's influence in Coast City.",
-            "Sector 1417: Monitor Sinestro's movements near Korugar.",
-            "Sector 0: Report to Oa for a promotion hearing."
+            "Sector 666: Report of Manhunter resurgence[cite: 70].",
+            "Sector 1417: Sinestro Corps sighting near Korugar[cite: 27].",
+            "Sector 2814: Investigate disturbance in Coast City[cite: 43].",
+            "Sector 0: Report to Oa for a ring diagnostic[cite: 25]."
         ];
-        document.getElementById('mission-display').innerText = missions[Math.floor(Math.random() * missions.length)];
+        document.getElementById('mission-display') || document.getElementById('missionText').innerText = missions[Math.floor(Math.random() * missions.length)];
     }
 </script>
 
