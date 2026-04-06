@@ -18,59 +18,128 @@
             background-color: #001a00;
             color: #00ff00;
             font-family: 'Courier New', Courier, monospace;
+            margin: 0;
             display: flex;
-            justify-content: center;
-            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
         .container {
-            max-width: 600px;
-            width: 100%;
+            max-width: 700px;
+            width: 95%;
+            margin-top: 20px;
             border: 2px solid #00ff00;
-            padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 0 20px #00ff00;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 25px #00ff00;
+            overflow: hidden;
         }
-        h1 { text-align: center; text-transform: uppercase; letter-spacing: 3px; }
-        .oath { font-style: italic; text-align: center; margin: 20px 0; color: #adff2f; }
-        .sector-stats { background: #002200; padding: 15px; border-radius: 8px; margin-top: 20px; }
-        button {
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: #002200;
+            border-bottom: 2px solid #00ff00;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            color: #00ff00;
+            font-family: 'Courier New', bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+        .tab-btn:hover { background: rgba(0, 255, 0, 0.1); }
+        .tab-btn.active { background: #00ff00; color: black; }
+
+        .content-section { display: none; padding: 25px; }
+        .content-section.active { display: block; }
+
+        h1 { text-align: center; font-size: 1.4rem; color: #adff2f; margin-bottom: 20px; }
+        .info-card { background: #001100; border: 1px solid #004400; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .label { color: #adff2f; font-weight: bold; font-size: 0.7rem; display: block; margin-bottom: 5px; }
+        
+        button.action-btn {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background: #00ff00;
             color: black;
             border: none;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 10px;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Corps Registry: Sector 2814</h1>
-    
-    <div class="oath">
-        "In brightest day, in blackest night,<br>
-        No evil shall escape my sight.<br>
-        Let those who worship evil's might,<br>
-        Beware my power... Green Lantern's light!"
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="openTab('registry')">Registry</button>
+        <button class="tab-btn" onclick="openTab('archives')">Archives</button>
+        <button class="tab-btn" onclick="openTab('missions')">Missions</button>
     </div>
 
-    <div class="sector-stats">
-        <strong>Active Lanterns:</strong> Hal Jordan, John Stewart, Guy Gardner, Kyle Rayner<br>
-        <strong>Status:</strong> Sector Secure<br>
-        <strong>Power Battery Charge:</strong> <span id="charge">100%</span>
+    <div id="registry" class="content-section active">
+        <h1>Sector 2814 Database</h1>
+        <div class="info-card">
+            <span class="label">Oath of the Corps:</span>
+            <p style="text-align: center; font-style: italic;">"In brightest day, in blackest night..."</p>
+        </div>
+        <div class="info-card">
+            <span class="label">Active Personnel:</span>
+            Hal Jordan, John Stewart, Guy Gardner, Kyle Rayner, Jessica Cruz, Simon Baz
+        </div>
+        <button class="action-btn" onclick="alert('Power Battery Synchronized!')">Check Battery Status</button>
     </div>
 
-    <button onclick="recharge()">Recite Oath to Recharge</button>
+    <div id="archives" class="content-section">
+        <h1>The Oan Archives</h1>
+        <div class="info-card">
+            <span class="label">The Emotional Spectrum:</span>
+            Will (Green), Fear (Yellow), Rage (Red), Love (Violet), Hope (Blue), Compassion (Indigo), Avarice (Orange).
+        </div>
+        <div class="info-card">
+            <span class="label">Sector Lore:</span>
+            <p>I've left this space open for the deep-cut info from your notebook! We can add sections here for specific character backstories or ring mechanics.</p>
+        </div>
+    </div>
+
+    <div id="missions" class="content-section">
+        <h1>Patrol Duty</h1>
+        <div class="info-card" id="mission-display">
+            Awaiting transmission from the Guardians...
+        </div>
+        <button class="action-btn" onclick="generateMission()">Generate Random Patrol</button>
+    </div>
 </div>
 
 <script>
-    function recharge() {
-        document.getElementById('charge').innerText = "100% - Fully Powered";
-        alert("Power battery recharged! Beware your power!");
+    function openTab(tabId) {
+        // Hide all sections
+        const sections = document.getElementsByClassName('content-section');
+        for (let s of sections) s.classList.remove('active');
+        
+        // Deactivate all buttons
+        const buttons = document.getElementsByClassName('tab-btn');
+        for (let b of buttons) b.classList.remove('active');
+        
+        // Show selected
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function generateMission() {
+        const missions = [
+            "Sector 666: Infiltrate the Forbidden Zone.",
+            "Sector 2814: Stop Starro's influence in Coast City.",
+            "Sector 1417: Monitor Sinestro's movements near Korugar.",
+            "Sector 0: Report to Oa for a promotion hearing."
+        ];
+        document.getElementById('mission-display').innerText = missions[Math.floor(Math.random() * missions.length)];
     }
 </script>
 
