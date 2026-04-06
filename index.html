@@ -15,185 +15,190 @@
 
     <style>
         :root {
-            --bg-dark: #0a0e0a;
-            --panel-bg: #141a14;
-            --accent-green: #2ecc71; /* Softer Emerald */
-            --text-main: #d1d8d1;
-            --text-dim: #8a968a;
-            --border-glow: #1b2e1b;
-            --highlight: #adff2f;
+            --bg-dark: #050805;
+            --panel-bg: #0f140f;
+            --emerald: #2ecc71;
+            --text-main: #e0e6e0;
+            --text-dim: #7a8a7a;
+            --border: #1a2a1a;
+            --neon: #39ff14;
         }
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            line-height: 1.6;
         }
         .container {
-            max-width: 900px;
+            max-width: 950px;
             width: 95%;
-            margin: 30px 0;
+            margin: 40px 0;
             background: var(--panel-bg);
-            border-radius: 8px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            border-radius: 4px;
             overflow: hidden;
-            border: 1px solid var(--border-glow);
         }
-        /* Tab Navigation */
+        /* Navigation */
         .nav-tabs {
             display: flex;
-            background: #0d120d;
-            border-bottom: 1px solid var(--border-glow);
+            background: #000;
+            border-bottom: 1px solid var(--border);
             flex-wrap: wrap;
         }
         .tab-btn {
             flex: 1;
-            padding: 18px;
+            padding: 20px;
             background: none;
             border: none;
             color: var(--text-dim);
-            font-weight: 600;
-            cursor: pointer;
             text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            font-weight: bold;
+            cursor: pointer;
             transition: 0.3s;
         }
-        .tab-btn:hover { color: var(--accent-green); background: rgba(46, 204, 113, 0.05); }
-        .tab-btn.active { color: var(--accent-green); border-bottom: 2px solid var(--accent-green); background: rgba(46, 204, 113, 0.1); }
+        .tab-btn:hover { color: var(--emerald); }
+        .tab-btn.active { color: var(--emerald); border-bottom: 2px solid var(--emerald); background: rgba(46, 204, 113, 0.05); }
 
-        .content-section { display: none; padding: 40px; }
+        .content-section { display: none; padding: 50px; min-height: 500px; }
         .content-section.active { display: block; }
 
-        /* Typography */
-        h1 { color: var(--accent-green); font-weight: 300; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 30px; border-bottom: 1px solid var(--border-glow); padding-bottom: 10px; }
-        h2 { color: var(--highlight); font-size: 1.1rem; margin-top: 25px; border-left: 3px solid var(--accent-green); padding-left: 15px; }
-        p { margin-bottom: 20px; }
+        h1 { font-weight: 200; text-transform: uppercase; letter-spacing: 6px; color: var(--emerald); border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 40px; }
+        h2 { color: var(--neon); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 30px; }
         
-        .info-block { margin-bottom: 30px; }
-        .tag { font-size: 0.7rem; background: #1b2e1b; color: var(--accent-green); padding: 3px 8px; border-radius: 4px; text-transform: uppercase; font-weight: bold; margin-right: 10px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: #080b08; border: 1px solid var(--border); padding: 20px; border-radius: 4px; transition: 0.3s; }
+        .card:hover { border-color: var(--emerald); transform: translateY(-5px); }
         
-        /* Stats & Tables */
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #0d120d; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #1b2e1b; font-size: 0.9rem; }
-        th { color: var(--accent-green); text-transform: uppercase; }
-
-        .oath-box { text-align: center; font-style: italic; background: #0d120d; padding: 20px; border-radius: 4px; margin: 20px 0; border: 1px dashed var(--border-glow); }
+        .stat-line { display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 10px; color: var(--text-dim); border-top: 1px solid #111; padding-top: 10px; }
         
         button.action-btn { 
-            background: transparent; border: 1px solid var(--accent-green); color: var(--accent-green); 
-            padding: 12px 24px; cursor: pointer; text-transform: uppercase; font-weight: bold; border-radius: 4px; transition: 0.3s;
+            background: transparent; border: 1px solid var(--emerald); color: var(--emerald); 
+            padding: 15px 30px; cursor: pointer; text-transform: uppercase; font-weight: bold; width: 100%; transition: 0.3s;
         }
-        button.action-btn:hover { background: var(--accent-green); color: #000; }
+        button.action-btn:hover { background: var(--emerald); color: #000; }
+
+        .ticker { background: #000; color: var(--neon); padding: 10px; font-family: monospace; font-size: 0.8rem; border-top: 1px solid var(--border); }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('registry', this)">Terminal</button>
-        <button class="tab-btn" onclick="switchTab('history', this)">History</button>
-        <button class="tab-btn" onclick="switchTab('personnel', this)">Personnel</button>
+        <button class="tab-btn active" onclick="switchTab('home', this)">Comm-Link</button>
+        <button class="tab-btn" onclick="switchTab('archives', this)">Archives</button>
         <button class="tab-btn" onclick="switchTab('spectrum', this)">Spectrum</button>
+        <button class="tab-btn" onclick="switchTab('ranks', this)">Rank Test</button>
     </div>
 
-    <div id="registry" class="content-section active">
-        <h1>Oan Interface</h1>
-        <div class="oath-box">
-            "In brightest day, in blackest night, No evil shall escape my sight. Let those who worship evil's might, Beware my power... Green Lantern's light!"
-        </div>
-        <p>Current Status: <span id="statusText" style="color:var(--highlight)">Monitoring Sector 2814</span></p>
-        <div id="missionLog" style="background:#000; padding:15px; border-radius:4px; font-family:monospace; font-size:0.85rem; color:#0f0;">
-            > Incoming Data Stream... <br>
-            > Initializing Willpower Calibration...
+    <div id="home" class="content-section active">
+        <h1>Oan Comm-Link</h1>
+        <div id="displayArea" style="background:#000; padding:30px; border-radius:4px; font-family:monospace; min-height:100px; color:var(--emerald); border-left: 4px solid var(--emerald);">
+            > INITIALIZING... <br>
+            > GREEN LANTERN CORPS HUB ONLINE <br>
+            > SECTOR 2814 SECURE <br>
+            > AWAITING INPUT...
         </div>
         <br>
-        <button class="action-btn" onclick="getOrders()">Access Real-Time Patrol Orders</button>
+        <button class="action-btn" onclick="runDiagnostic()">Run Sector Diagnostic</button>
     </div>
 
-    <div id="history" class="content-section">
-        <h1>Eras of the Emerald Knight</h1>
-        
-        <div class="info-block">
-            <h2>The Golden Age: Alan Scott (1940)</h2>
-            <p><span class="tag">Lore</span> Unlike the intergalactic Corps, Alan Scott's power was mystical. He forged a ring and lantern from the <strong>Starheart</strong>, an ancient meteor containing the Green Flame of Life. His primary weakness was <strong>Wood</strong>, a limitation born from the Starheart's magical nature.</p>
-        </div>
-
-        <div class="info-block">
-            <h2>The Silver Age: Hal Jordan (1959)</h2>
-            <p><span class="tag">Publication</span> DC rebooted the concept as hard Sci-Fi. Starpilot <strong>Abin Sur</strong> crashed on Earth and commanded his ring to find a successor "utterly honest and born without fear." It chose test pilot Hal Jordan.</p>
-        </div>
-
-        <div class="info-block">
-            <h2>The Emerald Twilight & Rebirth</h2>
-            <p><span class="tag">Major Event</span> Following the destruction of Coast City, Hal Jordan suffered a psychotic break, destroyed the Corps, and became the villain <strong>Parallax</strong>. This was later retconned in <em>GL: Rebirth</em> to reveal that Parallax was a sentient fear entity that had possessed Jordan through the ring's Yellow Impurity.</p>
-        </div>
-    </div>
-
-    <div id="personnel" class="content-section">
-        <h1>Lantern Personnel Files</h1>
-
-        <div class="info-block">
-            <h2>Keli Quintela (Teen Lantern)</h2>
-            <p><span class="tag">Sector 2814</span> An 11-year-old genius from La Paz, Bolivia. After witnessing a Green Lantern (Iorl) being murdered in a junkyard, she researched the Corps on her sister's phone and "hacked" the Lantern technology into a powerful alien gauntlet. She is considered a wildcard in the Corps hierarchy.</p>
-        </div>
-
-        <div class="info-block">
-            <h2>Tomar-Re (Sector 2813)</h2>
-            <p><span class="tag">Honor Guard</span> A Xudarian starpilot and the first alien to mentor Hal Jordan. He famously carried the guilt of failing to save the planet <strong>Krypton</strong>—he had been en route with stellar-suppressor uranium when a solar flare blinded him, causing him to arrive just as the planet exploded.</p>
-        </div>
-
-        <div class="info-block">
-            <h2>Mogo (Sector 2261)</h2>
-            <p><span class="tag">Living Planet</span> A sentient planet that is also a member of the Corps. Mogo is the entity responsible for guiding every new Power Ring to its destined recruit across the 3600 sectors of the universe.</p>
+    <div id="archives" class="content-section">
+        <h1>Lore Archives</h1>
+        <div class="grid">
+            <div class="card">
+                <h2>The Starheart</h2>
+                <p>The source of Alan Scott's power. A magical entity gathered by the Guardians and compressed into a green meteor.</p>
+                <div class="stat-line"><span>Origin:</span><span>Pre-Corps</span></div>
+            </div>
+            <div class="card">
+                <h2>The Yellow Impurity</h2>
+                <p>A flaw in the rings that prevented them from affecting the color yellow. Later revealed to be the fear entity, Parallax.</p>
+                <div class="stat-line"><span>Status:</span><span>Retconned</span></div>
+            </div>
+            <div class="card">
+                <h2>Iorl of Sector 2814</h2>
+                <p>The dying Lantern discovered by Keli Quintela. His gauntlet technology allowed her to "hack" the Green Light.</p>
+                <div class="stat-line"><span>Legacy:</span><span>Teen Lantern</span></div>
+            </div>
+            <div class="card">
+                <h2>Sector 2813</h2>
+                <p>Formerly protected by Tomar-Re. Home to the planet Xudar. Famously adjacent to the destroyed planet Krypton.</p>
+                <div class="stat-line"><span>Officer:</span><span>Tomar-Re</span></div>
+            </div>
         </div>
     </div>
 
     <div id="spectrum" class="content-section">
-        <h1>The Emotional Electromagnetic Spectrum</h1>
-        <p>The universe is fueled by seven primary emotional states, each represented by a color and a unique "Entity" of pure energy.</p>
-        
-        <table>
-            <tr><th>Emotion</th><th>Color</th><th>Entity</th><th>Core Philosophy</th></tr>
-            <tr><td>Will</td><td style="color:#2ecc71">Green</td><td>Ion</td><td>The ability to act and persevere.</td></tr>
-            <tr><td>Fear</td><td style="color:#f1c40f">Yellow</td><td>Parallax</td><td>Imposing order through terror.</td></tr>
-            <tr><td>Rage</td><td style="color:#e74c3c">Red</td><td>The Butcher</td><td>Primal, unthinking vengeance.</td></tr>
-            <tr><td>Hope</td><td style="color:#3498db">Blue</td><td>Adara</td><td>Optimism that fuels Willpower.</td></tr>
-            <tr><td>Avarice</td><td style="color:#e67e22">Orange</td><td>Ophidian</td><td>The hunger for absolute possession.</td></tr>
-            <tr><td>Compassion</td><td style="color:#9b59b6">Indigo</td><td>Proselyte</td><td>Redemption through forced empathy.</td></tr>
-            <tr><td>Love</td><td style="color:#ff69b4">Violet</td><td>The Predator</td><td>Deep, often obsessive devotion.</td></tr>
-        </table>
+        <h1>The Spectrum</h1>
+        <div class="grid">
+            <div class="card" style="border-top: 4px solid red;">
+                <h2>Rage (Red)</h2>
+                <p>The Butcher. Created from the first murder. Fueled by primal vengeance.</p>
+            </div>
+            <div class="card" style="border-top: 4px solid #2ecc71;">
+                <h2>Will (Green)</h2>
+                <p>Ion. The ability to overcome great fear. The center of the spectrum.</p>
+            </div>
+            <div class="card" style="border-top: 4px solid cyan;">
+                <h2>Hope (Blue)</h2>
+                <p>Adara. Created from the first prayer. Can heal and supercharge Green rings.</p>
+            </div>
+        </div>
     </div>
+
+    <div id="ranks" class="content-section" style="text-align:center;">
+        <h1>Corps Evaluation</h1>
+        <p>Submit your neural patterns to determine your current standing in the Corps.</p>
+        <div id="rankResult" style="font-size:2rem; margin:40px 0; color:var(--neon);">[ Awaiting Test ]</div>
+        <button class="action-btn" onclick="testRank()">Initialize Neural Scan</button>
+    </div>
+
+    <div class="ticker" id="newsTicker">> Welcome, Officer. Monitoring active sectors...</div>
 </div>
 
 <script>
     function switchTab(tabId, btn) {
         const sections = document.querySelectorAll('.content-section');
         sections.forEach(s => s.style.display = 'none');
-        
         const buttons = document.querySelectorAll('.tab-btn');
         buttons.forEach(b => b.classList.remove('active'));
-
         document.getElementById(tabId).style.display = 'block';
         btn.classList.add('active');
     }
 
-    function getOrders() {
-        const log = document.getElementById('missionLog');
-        const orders = [
-            "> ALERT: Sinestro Corps presence detected in Sector 1417.",
-            "> INTEL: Keli Quintela's gauntlet signal detected in Bolivia.",
-            "> COMMAND: Report to Mogo for mandatory combat training.",
-            "> PRIORITY: Parallax signature identified near the Sol system.",
-            "> STATUS: Sector 2813 secure. Honor Guard Tomar-Re on patrol."
+    function runDiagnostic() {
+        const display = document.getElementById('displayArea');
+        const logs = [
+            "> Sector 2814: Scanning Coast City... No threats detected.",
+            "> Sector 2261: Mogo is moving into position.",
+            "> Warning: Red Lantern signal detected in Sector 666.",
+            "> Data: Keli Quintela gauntlet sync at 98.4%.",
+            "> Alert: Sinestro Corps mobilizing near Korugar."
         ];
-        const random = orders[Math.floor(Math.random() * orders.length)];
-        log.innerHTML = "> Accessing Guardians' Data Stream... <br>> " + random;
+        display.innerHTML = "> ACCESSING... <br>" + logs[Math.floor(Math.random() * logs.length)];
     }
+
+    function testRank() {
+        const ranks = ["Recruit", "Officer", "Honor Guard", "Alpha Lantern", "Ion Bearer"];
+        const res = document.getElementById('rankResult');
+        res.innerHTML = "Scanning Willpower...";
+        setTimeout(() => {
+            res.innerHTML = ranks[Math.floor(Math.random() * ranks.length)];
+        }, 1000);
+    }
+
+    setInterval(() => {
+        const alerts = [
+            "> Sector 2814 secure", "> Ring charge at 100%", "> Monitoring Oa", "> Beware my power"
+        ];
+        document.getElementById('newsTicker').innerText = alerts[Math.floor(Math.random() * alerts.length)];
+    }, 5000);
 </script>
 
 </body>
